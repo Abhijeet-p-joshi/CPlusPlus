@@ -74,4 +74,6 @@ int main() {
     if (!myData) {
         std::cout << "myData is now null. Ownership was moved to the function.\n";
     }
+
+    return 0;
 }
