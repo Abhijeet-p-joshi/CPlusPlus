@@ -36,9 +36,14 @@ jobs:
 
     - name: Install g++ on Windows
       if: runner.os == 'Windows'
+      shell: pwsh
       run: |
-        choco install mingw -y
-        refreshenv
+        if (Get-Command g++ -ErrorAction SilentlyContinue) {
+          Write-Host 'g++ is already installed, skipping installation.'
+        } else {
+          choco install mingw -y
+          refreshenv
+        }
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
