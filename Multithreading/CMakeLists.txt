@@ -1,0 +1,5 @@
+add_executable(Demo Demo.cpp)
+add_executable(Mutex_Lockguards Mutex_Lockguards.cpp)
+add_executable(UniqLock_CondVar_Deadlocks UniqLock_CondVar_Deadlocks.cpp)
+
+add_subdirectory(Real_Examples)

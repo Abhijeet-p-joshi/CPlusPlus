@@ -1,0 +1,3 @@
+add_executable(custom_unique_ptr custom_unique_ptr.cpp)
+add_executable(tricky_uniqPtr tricky_uniqPtr.cpp)
+add_executable(unique_ptr unique_ptr.cpp)
