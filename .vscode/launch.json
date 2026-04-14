@@ -1,0 +1,52 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Singleton.cpp",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Design_Patterns/Singleton.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Design_Patterns",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Debug Mutex_Lockguards.cpp",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Multithreading/Mutex_Lockguards.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Multithreading",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Debug custom_unique_ptr.cpp",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Smart_Pointers/custom_unique_ptr.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Smart_Pointers",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Debug unique_ptr.cpp",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Smart_Pointers/unique_ptr.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Smart_Pointers",
+            "environment": [],
+            "console": "integratedTerminal"
+        }
+    ]
+}
