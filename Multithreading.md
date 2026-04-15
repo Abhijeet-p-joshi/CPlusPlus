@@ -72,6 +72,7 @@ mtx.unlock();
 **But this is bad.**
 
 🔹 Why manual locking is dangerous
+
 Problem 1 — Forgetting unlock
 
 ```c++
@@ -113,7 +114,7 @@ These are the actual synchronization primitives.
 3. **std::timed_mutex**: Supports timeout-based locking
 4. **std::recursive_timed_mutex**: Recursive + timeout
 
-**Mostly use: std::mutex**
+Mostly use: **std::mutex**
 
 **CATEGORY B — Lock Ownership Wrappers**
 These are RAII helpers that manage mutex locking.
@@ -123,7 +124,8 @@ These are RAII helpers that manage mutex locking.
 
 ## std::lock_guard — What, How, Why
 **What is it?**
-- A small RAII wrapper around a mutex.
+
+A small RAII wrapper around a mutex.
 
 When you create it:
 ```c++
@@ -278,6 +280,7 @@ Sometimes you want to:
 - maybe relock later
 
 -> With lock_guard, impossible.
+
 -> With unique_lock, possible.
 
 🔹 Example
@@ -311,9 +314,11 @@ int main()
 ```
 
 🔹 Why is this valuable?
+
 Because holding locks during expensive work is bad.
 
 Main thought should be: “Can I shorten the lock lifetime?”
+
 That improves:
 - concurrency
 - throughput
@@ -322,6 +327,7 @@ That improves:
 **Why std::condition_variable needs std::unique_lock**
 
 This is a common interview question.
+
 🔹 Why not lock_guard?
 
 Because condition_variable::wait() must:
@@ -329,8 +335,8 @@ Because condition_variable::wait() must:
 - sleep
 - wake up later
 - relock the mutex
-That requires a lock object that supports unlock/relock.
-lock_guard cannot do that, but unique_lock can.
+
+That requires a lock object that supports unlock/relock. lock_guard cannot do that, but unique_lock can.
 
 That is why:
 ```c++
@@ -352,6 +358,7 @@ does not.
 **What is std::scoped_lock?**
 
 It is an RAII lock wrapper introduced in C++17.
+
 Main purpose: Safely lock one or more mutexes in a deadlock-safe way.
 
 **Why was it introduced?**
@@ -388,10 +395,12 @@ std::scoped_lock lock(mtx1, mtx2);
 This locks both safely using deadlock avoidance internally.
 
 🔹 Why use it?
+
 Use scoped_lock when:
 - locking multiple mutexes
 - you want simpler syntax
 - you want deadlock-safe multi-lock acquisition
+
 🔹 Example
 ```c++
 #include <iostream>
