@@ -106,15 +106,16 @@ That is why lock wrappers exist.
 
 ## Categories of Locking Tools in C++
 
-**CATEGORY A** — Mutex Types
+**CATEGORY A — Mutex Types**
 These are the actual synchronization primitives.
 1. **std::mutex**: Basic exclusive lock
 2. **std::recursive_mutex**: Same thread can lock multiple times (usually avoid)
 3. **std::timed_mutex**: Supports timeout-based locking
 4. **std::recursive_timed_mutex**: Recursive + timeout
+
 **Mostly use: std::mutex**
 
-**CATEGORY B** — Lock Ownership Wrappers
+**CATEGORY B — Lock Ownership Wrappers**
 These are RAII helpers that manage mutex locking.
 1. **std::lock_guard**: Simple, strict, lightweight
 2. **std::unique_lock**: Flexible, feature-rich
@@ -134,6 +135,7 @@ it does this:
 - unlocks automatically when scope ends
 
 **Why use it?**
+
 Because it is:
 - simple
 - safe
@@ -141,6 +143,7 @@ Because it is:
 - ideal for straightforward critical sections
 
 **How it behaves**
+
 Lock happens here:
 ```c++
 std::lock_guard<std::mutex> lock(mtx);
@@ -151,6 +154,7 @@ Unlock happens automatically here:
 ```
 
 **When to use it?**
+
 Use lock_guard when:
 - you want to lock immediately
 - you want to hold the lock until scope ends
@@ -159,6 +163,7 @@ Use lock_guard when:
 This should be the default first choice.
 
 **Limitation**
+
 It cannot:
 - unlock early
 - relock
@@ -169,12 +174,14 @@ That’s where unique_lock comes in.
 ## std::unique_lock — What, How, Why
 
 **What is std::unique_lock?**
+
 std::unique_lock is also an RAII wrapper for mutexes, but with flexible ownership semantics.
 That means: It manages the lock, but allows you to control when and how the lock is acquired and released.
 
 It is more powerful than lock_guard.
 
 **Why does it exist?**
+
 Because many real-world synchronization problems need more than:
 “lock now, unlock at scope end”
 
@@ -187,6 +194,7 @@ You may need to:
 That is exactly why unique_lock exists.
 
 **What extra features does it provide?**
+
 unique_lock supports:
 - immediate locking
 - deferred locking
@@ -222,6 +230,7 @@ Then later you explicitly do:
 lock.lock();
 
 **Why would you ever want that?**
+
 Because sometimes locking must happen later, not immediately.
 
 Typical cases:
@@ -341,10 +350,12 @@ does not.
 ## std::scoped_lock — What, How, Why
 
 **What is std::scoped_lock?**
+
 It is an RAII lock wrapper introduced in C++17.
 Main purpose: Safely lock one or more mutexes in a deadlock-safe way.
 
 **Why was it introduced?**
+
 Because locking multiple mutexes manually is dangerous.
 
 Example:
@@ -363,6 +374,7 @@ you can **deadlock**.
 So C++ introduced std::scoped_lock to make multi-lock acquisition safer and easier.
 
 **How does it work?**
+
 Single mutex:
 ```c++
 std::scoped_lock lock(mtx);
@@ -465,9 +477,13 @@ yes → condition_variable + unique_lock
 If someone asks:
 
 Q: **Explain the difference between lock_guard, unique_lock, and scoped_lock.**
-strong answer:
-std::lock_guard is a lightweight RAII wrapper for simple scoped locking of a single mutex.
-std::unique_lock is a more flexible lock wrapper that supports deferred locking, manual unlock/relock, movable ownership, and is required for condition variables.
-std::scoped_lock is a modern RAII wrapper that can lock one or multiple mutexes safely and is especially useful for deadlock-safe multi-mutex locking.
+
+*std::lock_guard* is a lightweight RAII wrapper for simple scoped locking of a single mutex.
+*std::unique_lock* is a more flexible lock wrapper that supports deferred locking, manual unlock/relock, movable ownership, and is required for condition variables.
+*std::scoped_lock* is a modern RAII wrapper that can lock one or multiple mutexes safely and is especially useful for deadlock-safe multi-mutex locking.
 
 That is a proper answer.
+
+**Prompt**
+**Before we go to phase 3, follow the path an interviewer takes to ask about multithreading. Assume he start with simple code, ask to make it thread safe, asks to use from basic lock to advanced scoped_lock and ask to explain producer consumer problem. How do you do it? **
+
